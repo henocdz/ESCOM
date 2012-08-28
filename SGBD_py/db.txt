@@ -1,0 +1,10 @@
+
+
+> Registro [1]
+	folio => 456
+
+> Registro [2]
+	folio => 12356
+
+> Registro [3]
+	folio => 569

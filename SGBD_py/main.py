@@ -2,7 +2,7 @@
 
 import os
 import time
-class BD:
+class Table:
 	"""Crear nueva base de datos"""
 	def __init__(self):
 		self.metadata = {}
@@ -17,7 +17,7 @@ class BD:
 		except ValueError:
 			print "Valor no valido"
 			time.sleep(1)
-			self.defNombreAttr()
+			nombre = self.defNombreAttr()
 
 		if self.metadata.has_key(nombre):
 			print "Ese campo ya existe, intenta con otro"
@@ -38,13 +38,13 @@ class BD:
 			else:
 				print "Valor no valido"
 				time.sleep(1)
-				self.defTipo()
+				tipo = self.defTipo()
 
 
 		except ValueError:
 			print "Valor no valido"
 			time.sleep(1)
-			self.defTipo()
+			tipo = self.defTipo()
 		return tipo
 
 	def agregarCampo(self):
@@ -71,6 +71,7 @@ class BD:
 		self.menu()
 
 	def regValue(self,campo,tipo):
+		"""Obtener del usuario valor a agregar al campo"""
 		value = raw_input("Introduce el valor para %s (%s): " % (campo,tipo))
 		tipo = tipo.lower()
 		try:
@@ -83,11 +84,12 @@ class BD:
 		except ValueError:
 			print "Valor no valido debe ser de tipo ",tipo
 			time.sleep(1)
-			self.regValue(campo,tipo)
+			value = self.regValue(campo,tipo)
 
 		return value
 
 	def agregarRegistro(self):
+		"""Agregar nuevo registro"""
 		os.system("cls")
 
 		if len((self.metadata).keys()) <= 0:
@@ -116,6 +118,7 @@ class BD:
 		self.menu()
 
 	def rawString(self,cad):
+		"""Obtener una cadena string"""
 		myStr= raw_input("Introduce %s (debe ser STRING): " % cad)
 
 		try:
@@ -123,11 +126,46 @@ class BD:
 		except ValueError:
 			print "Valor no valido debe ser de tipo STRING (CADENA)"
 			time.sleep(1)
-			self.rawStr(cad)
+			myStr = self.rawString(cad)
 
 		return myStr
 
+	def rawInt(self,cad):
+		"""Obtener tipo de dato entero"""
+		myInt = raw_input("Introduce %s (debe ser INT): " % cad)
+
+		try:
+			myInt = int(myInt)
+		except ValueError:
+			print "Valor no valido debe ser de tipo INT (ENTERO)"
+			time.sleep(1)
+			myInt = self.rawInt(cad)
+
+		return myInt
+
+	def eliminarAtributo(self):
+		"""Obtener valor de un campo"""
+		os.system("cls")
+		key = self.rawString("el nombre del atributo que deseas eliminar")
+
+		if(not (self.metadata.has_key(key)) ):
+			print "Atributo no encontrado"
+			time.sleep(1)
+			self.menu()
+
+		for r in self.bd:
+			for i in range(len(self.bd[r])):
+				if self.bd[r][i-1][0]  == key:
+					v = self.bd[r][i-1][1]
+					self.bd[r].remove([key,v])
+					
+
+		print "Atributo Borrado"
+		time.sleep(2)
+		self.menu()
+
 	def modificarDato(self):
+		"""Modificar un Dato"""
 		os.system("cls")
 		key = self.rawInt("la clave del elemento que deseas modificar")
 
@@ -139,12 +177,12 @@ class BD:
 		field = self.rawString("el nombre del campo a modificar")
 		
 		valor = self.regValue(field,self.metadata[field])
-
+		flag = False
 		if self.metadata.has_key(field):
-			for r in self.bd:
-				for i in range(len(self.bd[r])):
-					if self.bd[r][i-1][0]  == field:
-						self.bd[r][i-1][1] = valor 
+			for i in range(len(self.bd[key])):
+				if self.bd[key][i-1][0]  == field:
+					self.bd[key][i-1][1] = valor
+					break
 		else:
 			print "No existe ese campo"
 			time.sleep(1)
@@ -153,6 +191,7 @@ class BD:
 		self.menu()
 
 	def eliminarRegistro(self):
+		"""Eliminar un registro de la tabla"""
 		os.system("cls")
 		key = self.rawInt("la clave del elemento que deseas eliminar")
 		if(self.bd.has_key(key)):
@@ -165,19 +204,8 @@ class BD:
 
 		self.menu()
 
-	def rawInt(self,cad):
-		myInt = raw_input("Introduce %s (debe ser INT): " % cad)
-
-		try:
-			myInt = int(myInt)
-		except ValueError:
-			print "Valor no valido debe ser de tipo INT (ENTERO)"
-			time.sleep(1)
-			self.rawInt(cad)
-
-		return myInt
-
 	def buscarRegistro(self):
+		"""Buscar un registro en la tabla"""
 		os.system("cls")
 		key = self.rawInt("la clave del elemento que buscas")
 
@@ -193,6 +221,7 @@ class BD:
 		self.menu()
 
 	def eliminarDB(self):
+		"""Eliminar datos y metadata"""
 		os.system("cls")
 		self.bd.clear()
 		self.metadata.clear()
@@ -202,6 +231,7 @@ class BD:
 		self.menu()
 
 	def eliminarRegistros(self):
+		"""Eliminar solamente los registros, se conserva metadata"""
 		os.system("cls")
 		self.bd = {}
 
@@ -210,6 +240,7 @@ class BD:
 		self.menu()
 
 	def imprimirMD(self):
+		"""Imprimir metadata (no implemetada)"""
 		for r in self.metadata:
 			print self.metadata[r]
 
@@ -217,6 +248,7 @@ class BD:
 		self.menu()
 
 	def imprimirBD(self):
+		"""Imprimir Tabla"""
 		if len((self.bd).keys()) <= 0:
 			print "Debes agregar por lo menos un registro primero"
 			time.sleep(1)
@@ -232,8 +264,23 @@ class BD:
 		os.system("pause")
 		self.menu()
 
+
+	def escribirArchivo(self):
+		"""Escribir toda la tabla logica, en la tabla"""
+		f = open('db.txt','w')
+		f2f = []
+		for r in self.bd:
+			f.seek(0,2)
+			f.write("\n\n> Registro [" + str(r)+ "]")
+			for i in range(len(self.bd[r])):
+				f.seek(0,2)
+				f.write("\n\t" + str(self.bd[r][i-1][0]) + " => " + str(self.bd[r][i-1][1]))
+
+
 	def menu(self):
+		"""Ibidem"""
 		os.system("cls")
+		self.escribirArchivo()
 		print """
 BIENVENIDO!  
 Elige la opcion que desees
@@ -245,7 +292,8 @@ Elige la opcion que desees
   [6] Eliminar BD
   [7] Imprimir DB
   [8] Eliminar TODOS los registros
-  [9] Salir
+  [9] Eliminar atributo
+  [10+] Salir
 	"""
 
 		op = raw_input("\t Escribe la opcion: ")
@@ -273,13 +321,15 @@ Elige la opcion que desees
 			self.imprimirBD()
 		elif op == 8:
 			self.eliminarRegistros()
-		elif op >= 9 or op <= 0:
+		elif op == 9:
+			self.eliminarAtributo()
+		elif op >= 10 or op <= 0:
 			print "Adios!"
 			time.sleep(1)
 			exit()
 
 
 
-bd1 = BD()
+t1 = Table()
 
-bd1.menu()
+t1.menu()
