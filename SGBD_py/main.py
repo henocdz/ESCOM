@@ -40,12 +40,19 @@ class Table:
 				time.sleep(1)
 				tipo = self.defTipo()
 
-
 		except ValueError:
 			print "Valor no valido"
 			time.sleep(1)
 			tipo = self.defTipo()
 		return tipo
+#ves los cambios? Acabo de ver éste :O jaja Real Time 8| Yeah! jaja está genial esto! XD Y aunque mueva el cursor no, mueve eltuyo
+
+#No, yo puedo editar lo que sea y supongo que no pasa nada si los dos agregamso una linea al mismo tiempo
+
+#Ok supongo que si lo guardo lo sube a Github no?
+#Ya está guardado según falta ver si está en GitHub
+#Si yo lo corro también te aparece a ti la consola abajo? Sí también (y)
+#Que bien, no, no está en Github :S Tools/Git/Push :D También eso está bien we, sólo lo sube cuando tú decides
 
 	def agregarCampo(self):
 		""" Agregar un nuevo atributo a la tabla """
