@@ -1,4 +1,4 @@
-#encoding utf-8
+# -*- coding: UTF-8 -*-
 
 import os
 import time
@@ -8,6 +8,8 @@ class Table:
 		self.metadata = {}
 		self.bd = {}
 		self.lastItem = 0
+
+#éstá
 
 	def defNombreAttr(self):
 		"""Obtener nombre del nuevo campo"""
@@ -44,19 +46,13 @@ class Table:
 			print "Valor no valido"
 			time.sleep(1)
 			tipo = self.defTipo()
+            
 		return tipo
-#ves los cambios? Acabo de ver éste :O jaja Real Time 8| Yeah! jaja está genial esto! XD Y aunque mueva el cursor no, mueve eltuyo
-
-#No, yo puedo editar lo que sea y supongo que no pasa nada si los dos agregamso una linea al mismo tiempo
-
-#Ok supongo que si lo guardo lo sube a Github no?
-#Ya está guardado según falta ver si está en GitHub
-#Si yo lo corro también te aparece a ti la consola abajo? Sí también (y)
-#Que bien, no, no está en Github :S Tools/Git/Push :D También eso está bien we, sólo lo sube cuando tú decides
+        
 
 	def agregarCampo(self):
 		""" Agregar un nuevo atributo a la tabla """
-		os.system("cls")
+		os.system("clear")
 
 		nombre = self.defNombreAttr()
 		tipo = self.defTipo()
@@ -97,7 +93,7 @@ class Table:
 
 	def agregarRegistro(self):
 		"""Agregar nuevo registro"""
-		os.system("cls")
+		os.system("clear")
 
 		if len((self.metadata).keys()) <= 0:
 			print "Debes definir por lo menos un atributo"
@@ -152,7 +148,7 @@ class Table:
 
 	def eliminarAtributo(self):
 		"""Obtener valor de un campo"""
-		os.system("cls")
+		os.system("clear")
 		key = self.rawString("el nombre del atributo que deseas eliminar")
 
 		if(not (self.metadata.has_key(key)) ):
@@ -173,7 +169,7 @@ class Table:
 
 	def modificarDato(self):
 		"""Modificar un Dato"""
-		os.system("cls")
+		os.system("clear")
 		key = self.rawInt("la clave del elemento que deseas modificar")
 
 		if(not (self.bd.has_key(key)) ):
@@ -199,7 +195,7 @@ class Table:
 
 	def eliminarRegistro(self):
 		"""Eliminar un registro de la tabla"""
-		os.system("cls")
+		os.system("clear")
 		key = self.rawInt("la clave del elemento que deseas eliminar")
 		if(self.bd.has_key(key)):
 			del self.bd[key]
@@ -213,7 +209,7 @@ class Table:
 
 	def buscarRegistro(self):
 		"""Buscar un registro en la tabla"""
-		os.system("cls")
+		os.system("clear")
 		key = self.rawInt("la clave del elemento que buscas")
 
 		if(not (self.bd.has_key(key)) ):
@@ -229,7 +225,7 @@ class Table:
 
 	def eliminarDB(self):
 		"""Eliminar datos y metadata"""
-		os.system("cls")
+		os.system("clear")
 		self.bd.clear()
 		self.metadata.clear()
 
@@ -239,7 +235,7 @@ class Table:
 
 	def eliminarRegistros(self):
 		"""Eliminar solamente los registros, se conserva metadata"""
-		os.system("cls")
+		os.system("clear")
 		self.bd = {}
 
 		print "Registros Eliminados"
@@ -286,8 +282,8 @@ class Table:
 
 	def menu(self):
 		"""Ibidem"""
-		os.system("cls")
-		self.escribirArchivo()
+		#os.system("clear")
+	#	self.escribirArchivo()
 		print """
 BIENVENIDO!  
 Elige la opcion que desees
