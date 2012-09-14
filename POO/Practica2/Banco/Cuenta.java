@@ -1,6 +1,8 @@
 package Banco;
 
 import java.util.*;
+import java.text.*;
+
 
 public class Cuenta {
     private long numero;
@@ -29,7 +31,7 @@ public class Cuenta {
     
     public boolean realizarMovimiento(Date fecha,String tipo,double importe)
     {
-        if(tipo.toLowerCase().equals("retiro"))
+        if(tipo.toLowerCase().equals("retiro") || tipo.toLowerCase().equals("pago tarjeta") || tipo.toLowerCase().equals("pago servicio"))
         {
             if(!(this.saldo - importe >= 0))
                 return false;
@@ -48,7 +50,7 @@ public class Cuenta {
     
     public void imprimirMovimientos()
     {
-        System.out.print("\nMovimientos: ");
+        System.out.print("\n\t Movimientos: ");
         if(this.movimientos.isEmpty())
         { 
             System.out.print("No Hay");
@@ -63,12 +65,9 @@ public class Cuenta {
             int d,mm,a;
             String ff;
             
-            d = m.getFecha().getDay();
-            mm = m.getFecha().getMonth() + 1;
-            a = m.getFecha().getYear();
-            ff = d+"/"+mm+"/"+a;
+            SimpleDateFormat f = new SimpleDateFormat("dd/MM/YYYY");
             
-            System.out.print("\n\t Movimiento: "+it+": \n\t\t Tipo: " + m.getTipo() + "\n\t\t Fecha: "+ ff +" \n\t\t Importe: "+m.getImporte()+"\n\t\t Saldo: " +m.getSaldo());
+            System.out.print("\n\t Movimiento: "+it+": \n\t\t Tipo: " + m.getTipo() + "\n\t\t Fecha: "+ f.format(m.getFecha()) +" \n\t\t Importe: "+m.getImporte()+"\n\t\t Saldo: " +m.getSaldo());
         }
     }
     
