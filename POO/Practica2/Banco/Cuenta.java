@@ -9,10 +9,11 @@ public class Cuenta {
     private String titular;
     private double saldo;
     private double interesAnual;
-    private ArrayList <Movimiento> movimientos = new ArrayList();
+    private ArrayList <Movimiento> movimientos;
     
     public Cuenta(Cliente c,long id,double saldo, double interes)
     {
+        this.movimientos = new ArrayList();
         this.titular = c.nombreCompleto();
         this.numero = id;
         this.saldo = saldo;
