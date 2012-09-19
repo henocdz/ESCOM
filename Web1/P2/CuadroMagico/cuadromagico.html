@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta  charset="utf-8"/>
+		<title>Cuadro Mágico</title>
+
+		<style>
+			.rowSquare
+			{
+				white-space: nowrap;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Cubo M&aacute;gico</h1>
+		</header>
+
+		<section id="contenedor">
+			<form onSubmit="return doMagic()" name="f">
+				<input type="text" name="num" autocomplete="off" placeholder="Introduce un número impar"/>			
+			</form>
+
+			<button onclick="doMagic()">Generar Cuadro M&aacute;gico</button>
+
+			<div id="cuadro"></div>
+		</section>		
+
+		<script src="cuadromagico.js"></script>
+	</body>
+</html>
