@@ -41,6 +41,12 @@ public class Cuenta {
         }else if(tipo.toLowerCase().equals("ingreso"))
         {
             this.saldo += importe;
+        }else if(tipo.toLowerCase().equals("consulta saldo"))
+            this.consultarSaldo();
+        else
+        {
+            System.out.println("Error de movimiento");
+            return false;
         }
         
         Movimiento move = new Movimiento(fecha,tipo,importe,this.saldo);
@@ -72,6 +78,8 @@ public class Cuenta {
         }
     }
     
+    
+    
     public void imprimirInfoCuenta()
     {
         System.out.println("\t Número: "+this.numero+" \n\t Saldo: "+this.saldo+"\n\t Interés:"+this.interesAnual);
@@ -79,12 +87,7 @@ public class Cuenta {
         this.imprimirMovimientos();
     }
     
-    public void ingreso(double cantidad)
-    {
-    }
-    
-    public void reintegro(double cantidad)
-    {
-        
+    private void consultarSaldo(){
+        System.out.println("El saldo actual para la cuenta "+this.numero+" es de: "+this.saldo);
     }
 }
