@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Division Larga</title>
+
+	<script>
+		function check(){
+			var p,pb;
+			pb = p = document.getElementById('word').value;
+			pb = pb.toLowerCase();
+
+			//Ignorar espacios
+			pb = pb.replace(/ /g,'');
+
+			var mp = pb.split('');
+			console.log(pb)
+			var l,lp,i=0;
+			lp  = mp.length;
+			
+			var f = true;
+
+			while(i<lp)
+			{				
+				l = (lp - 1) - i;
+				if(mp[i] != mp[l])
+				{
+					f = false;
+					break;
+				}else if(i===l || (l-i) == 1)
+					break;
+
+				i++;
+			}
+			
+			if(f)
+				alert("La palabara/frase "+p+" es palindromo");
+			else
+				alert("La palabara/frase "+p+" NO es palindromo");
+		}
+
+	</script>
+
+</head>
+<body>
+		<input type="text" placeholder="Escribe una palabra palindromo" autocomplete="off" id="word" value="" />
+		<button onclick="check()">Verificar</button>
+</body>
+</html>
