@@ -7,9 +7,12 @@
 		function check(){
 			var p,pb;
 			pb = p = document.getElementById('word').value;
+			
 			pb = pb.toLowerCase();
 
-			//Ignorar espacios
+			//Ignorar espacios y poder comprobar frases completas y no solo palabras
+			//Ex: Anita lava la tina
+			
 			pb = pb.replace(/ /g,'');
 
 			var mp = pb.split('');
