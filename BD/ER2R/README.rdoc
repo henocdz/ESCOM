@@ -16,7 +16,7 @@ El archivo deberan seguir la siguiente estructura
   |--
   |--
 
-Las lineas "|-- Tipos de Entidad" y "|--", simplemente hacemos referencia a que primero van los tipos de entidad y posteriormenete los vínculos con la linea divisora.
+Las lineas "|- - Tipos de Entidad" y "|--", no deben incluirse en el archivo simplemente hacemos referencia a que primero van los tipos de entidad y posteriormenete los vínculos con la linea divisora.
 
 La linea "/vinculos" es muy importante para el interprete, si no es encontrada, marcara un error.
 
@@ -66,3 +66,24 @@ Como sabemos en un modelo ER podemos tener llaves parciales que sean compuestas 
   "nombre_tipo_entidad",*C(|nombre_multivaluado_compuesto|:quienes;lo;componen)*
 
 =Vínculos
+
+*En construcción*
+
+=Ejemplo de un Entidad-Relacion, escrito en la sintaxis previamente definida
+
+  "tipo_avion",{modelo},capacidad,peso
+  "hangar",{numero},lugar,capacidad,*colores*
+  "piloto",rest,{numeroLicencia}
+  "empleado",turno,{nss},salario
+  "dueno",{nss},nombre
+  "avion",{nreg}
+  "servicio",[C(|fecha/codT|:fecha;codT)],horas
+  
+  
+  /vinculos
+  "tipoAvion_avion",0r5,p1pN
+  "tipoAvion_piloto",0r2,pMpN
+  "avion_hangar",5r1,tNp1
+  "avion_sevicio",5d6,p1pN
+  "avion_dueno",5r4,pMpN
+  "sevicio_empleado",6r3,pMpN
