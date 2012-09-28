@@ -46,3 +46,28 @@ Nota: No es importante el orden de donde se coloque la llave, puede ir en cualqu
 Las llaves parciales tienen como sintaxis:
 
 	"nombre_tipo_entidad",[llave_parcial],atributos,simples
+
+==Atributos multivaluados
+
+Los atributos multivaluados deberan ir entre asteriscos
+
+	"nombre_entidad",*atributo_multivaluado*,{llave_primaria},otro
+
+==Atributos compuestos
+
+Esta es quizá la sintaxis más compleja, primero debemos establecer el nombre del atributo y después el nombre de quienes se componen
+
+	"nombre_tipo_entidad",otro,{llave_primaria},C(|nombre_compuesto|:elemento;que;lo;componen)
+
+==Combinaciones
+
+===Llaves parciales compuestas
+Como sabemos en un modelo ER podemos tener llaves parciales que sean compuestas y para eso ocupamos la sintaxis:
+
+	"nombre_tipo_entidad",[C(|llave_compuesta|:quienes;lo;componen)]
+
+===Multivaluados compuestos
+
+	"nombre_tipo_entidad",*C(|nombre_multivaluado_compuesto|:quienes;lo;componen)*
+
+=Vínculos
