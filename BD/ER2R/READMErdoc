@@ -1,0 +1,6 @@
+== Transformar Modelo Entidad-Relacion a Modelo Relacional
+
+El programa se encargará de interpretar un archivo en el que se definira el esquema Entidad-Relacion, bajo la sintaxis a continuación y este lo mostrará con
+una nueva sintaxis de manera relacional.
+
+== Sintaxis para archivo Entidad-Relacion
