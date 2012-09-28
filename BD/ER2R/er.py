@@ -23,7 +23,10 @@ def transformar(archivo):
 	modR = {}
 
 	#Abrir archivo
-	f = open(archivo)
+	try:
+		f = open(archivo)
+	except:
+		print "Raro pero cierto, hubo un error, la ruta del archivo esta mal"
 
 	#Todas las lineas del archivo
 	lineas = f.readlines()
@@ -140,25 +143,52 @@ def transformar(archivo):
 	for v in vinculos:
 		card1 = ""
 		card2 = ""
-		participantes = 0
+		part1 = ""
+		part2 = ""
 
 		v = v.split(',')
-		primera = int(v[1][0])
-		segunda = int(v[1][2])
-
 		nombreVinculo = v[0].replace('"','')
 
-		v[1] = v[1].lower()
-		if v[1].split('u','') > 0:
-			#vinculo eneario
-			pass
+		rels = v[1].lower()
+		eneario = rels.split('u');
+
+		if  len(eneario) > 1:
+			for en in eneario:
+				if en == "":
+					continue
+				en = en.replace(')','').replace('(','')
+				
+				modR[nombreVinculo] = []
+				try:
+					e1 = entities[int(en[0])]
+					e2 = entities[int(en[2])]
+				except:
+					print "Error de sintaxis"
+					break
+
+				for pke1 in obtenerClavesMN(modR,e1):
+					modR[nombreVinculo].append(pke1)
+
+				for pke2 in obtenerClavesMN(modR,e2):
+					modR[nombreVinculo].append(pke2)
+			continue
+
+		try:
+			primera = int(v[1][0])
+			segunda = int(v[1][2])
+		except:
+			print "Error de sintaxis"
 
 		i = 0;
 		for e in v[2]:
 			i += 1
 			e = e.lower()
 			if e == 'p' or e == 't':
-				continue
+				if i==1:
+					part1 = e
+				elif i==3:
+					part2 = e
+				
 			elif e == '1':
 				if(i==2):
 					card1 = '1'
@@ -195,6 +225,19 @@ def transformar(archivo):
 				modR[nombreVinculo].append(pk)
 			for pk in obtenerClavesMN(modR,seg):
 				modR[nombreVinculo].append(pk)
+		elif card1=='1' and card2=='1':
+			if part1 == 'p' and part2 == 't':
+				pks = entityHasPK(modR,seg)
+				for pk in obtenerClaves(modR,prim,pks):
+					modR[seg].append(pk)
+			elif part1 == 't' and part2 == 'p':
+				pks = entityHasPK(modR,prim)
+				for pk in obtenerClaves(modR,seg,pks):
+					modR[prim].append(pk)
+			else:
+				pks = entityHasPK(modR,prim)
+				for pk in obtenerClaves(modR,seg,pks):
+					modR[prim].append(pk)	
 
 	for relacion in modR:
 		print relacion," => "
@@ -228,8 +271,9 @@ Bienvenido!
 """
 
 
-#transformar("format.bd")
-def goahead():
+transformar("format.bd")
+
+"""def goahead():
 	transformar(raw_input("Introduzca el archivo a transformar (*.bd): "))
 while 1:
-	goahead()
+	goahead()"""

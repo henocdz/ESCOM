@@ -9,7 +9,7 @@
 /vinculos
 "tipoAvion_avion",(0r5)U(0r4),p1pN
 "tipoAvion_piloto",0r2,pMpN
-"avion_hangar",5r1,tNp1
+"avion_hangar",5r1,t1p1
 "avion_sevicio",5d6,p1pN
 "avion_dueno",5r4,pMpN
 "sevicio_empleado",6r3,pMpN,#atributo1,attr2#
