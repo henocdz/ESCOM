@@ -9,13 +9,13 @@ una nueva sintaxis de manera relacional.
 
 El archivo deberan seguir la siguiente estructura
 
-	|-- Entidades
-	|--
-	|--
-	|--
-	/vinculos
-	|--
-	|--
+  |-- Entidades
+  |--
+  |--
+  |--
+  /vinculos
+  |--
+  |--
 
 La primera linea que se establece con "Entidades", no debe ir, simplemente hacemos referencia a que primera van las entidades y después los vinculos
 La linea "/vinculos" es muy importante para el interprete, si no es encontrada, marcara un error.
@@ -24,7 +24,7 @@ La linea "/vinculos" es muy importante para el interprete, si no es encontrada, 
 =Estructura de tipos de entidad
 
 Cada tipo de entidades debera ir en una nueva linea, con el siguiente formato obligatorio
-	"nombre_tipo_entidad",atributos,separados,por,comas
+  "nombre_tipo_entidad",atributos,separados,por,comas
 
 =Formato para entidades
 
@@ -32,38 +32,38 @@ Cada tipo de entidades debera ir en una nueva linea, con el siguiente formato ob
 
 Cuando se desea especificar una entidad simple, simplemente se coloca en el lugar deseado separado por una "," (coma)
 
-	"nombre_tipo_entidad",atributos,simples
+  "nombre_tipo_entidad",atributos,simples
 
 ==Llave primaria
 
 Las llaves primaria deben ir entre llaves, como sigue
 
-	"nombre_tipo_entidad",{llave_primaria},atributos,simples
+  "nombre_tipo_entidad",{llave_primaria},atributos,simples
 
 Nota: No es importante el orden de donde se coloque la llave, puede ir en cualquiera parte y precedido por otro tipo de atributo
 
 ==Llave parcial
 
 Las llaves parciales tienen como sintaxis:
-	"nombre_tipo_entidad",[llave_parcial],atributos,simples
+  "nombre_tipo_entidad",[llave_parcial],atributos,simples
 
 ==Atributos multivaluados
 
 Los atributos multivaluados deberan ir entre asteriscos
-	"nombre_entidad",\*atributo_multivaluado\*,{llave_primaria},otro
+  "nombre_entidad",\*atributo_multivaluado\*,{llave_primaria},otro
 
 ==Atributos compuestos
 
 Esta es quizá la sintaxis más compleja, primero debemos establecer el nombre del atributo y después el nombre de quienes se componen
-	"nombre_tipo_entidad",otro,{llave_primaria},C(|nombre_compuesto|:elemento;que;lo;componen)
+  "nombre_tipo_entidad",otro,{llave_primaria},C(|nombre_compuesto|:elemento;que;lo;componen)
 
 ==Combinaciones
 
 ===Llaves parciales compuestas
 Como sabemos en un modelo ER podemos tener llaves parciales que sean compuestas y para eso ocupamos la sintaxis:
-	"nombre_tipo_entidad",[C(|llave_compuesta|:quienes;lo;componen)]
+  "nombre_tipo_entidad",[C(|llave_compuesta|:quienes;lo;componen)]
 
 ===Multivaluados compuestos
-	"nombre_tipo_entidad",*C(|nombre_multivaluado_compuesto|:quienes;lo;componen)*
+  "nombre_tipo_entidad",*C(|nombre_multivaluado_compuesto|:quienes;lo;componen)*
 
 =Vínculos
