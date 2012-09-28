@@ -6,7 +6,6 @@
 "avion",{nreg}
 "servicio",[C(|fecha/codT|:fecha;codT)],horas,*C(|fecha/codT|:fecha;codT)*
 
-
 /vinculos
 "tipoAvion_avion",(0r5)U(0r4),p1pN
 "tipoAvion_piloto",0r2,pMpN
