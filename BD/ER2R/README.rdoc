@@ -1,15 +1,14 @@
-=Transformar Modelo Entidad-Relacion a Modelo Relacional
+=Transformar Modelo Entidad-Relación a Modelo Relacional
 
-El programa se encargará de interpretar un archivo en el que se definira el esquema Entidad-Relacion, bajo la sintaxis a continuación y este lo mostrará con
-una nueva sintaxis de manera relacional.
+El programa se encargará de interpretar un archivo en el que se definira el esquema Entidad-Relacion, bajo la sintaxis a continuación y este lo mostrará con una nueva sintaxis de manera relacional.
 
 =Sintaxis para archivo Entidad-Relacion
 
-==Estrucutra del archivo
+==Estructura del archivo
 
 El archivo deberan seguir la siguiente estructura
 
-  |-- Entidades
+  |-- Tipos de Entidad
   |--
   |--
   |--
@@ -17,20 +16,20 @@ El archivo deberan seguir la siguiente estructura
   |--
   |--
 
-La primera linea que se establece con "Entidades", no debe ir, simplemente hacemos referencia a que primera van las entidades y después los vinculos
-La linea "/vinculos" es muy importante para el interprete, si no es encontrada, marcara un error.
+Las lineas "|-- Tipos de Entidad" y "|--", simplemente hacemos referencia a que primero van los tipos de entidad y posteriormenete los vínculos con la linea divisora.
 
+La linea "/vinculos" es muy importante para el interprete, si no es encontrada, marcara un error.
 
 =Estructura de tipos de entidad
 
-Cada tipo de entidades debera ir en una nueva linea, con el siguiente formato obligatorio
+Cada tipo de entidad deberá ir en una nueva linea, con el siguiente formato obligatorio
   "nombre_tipo_entidad",atributos,separados,por,comas
 
 =Formato para entidades
 
-==Entidad simple
+==Atributo simple
 
-Cuando se desea especificar una entidad simple, simplemente se coloca en el lugar deseado separado por una "," (coma)
+Cuando se desea especificar un atributo simple, unicamente se coloca en el lugar deseado separado por una "," (coma)
 
   "nombre_tipo_entidad",atributos,simples
 
@@ -44,20 +43,20 @@ Nota: No es importante el orden de donde se coloque la llave, puede ir en cualqu
 
 ==Llave parcial
 
-Las llaves parciales tienen como sintaxis:
+Las llaves parciales son identificadas entre corchetes, con la siguiente sintaxis
   "nombre_tipo_entidad",[llave_parcial],atributos,simples
 
 ==Atributos multivaluados
 
 Los atributos multivaluados deberan ir entre asteriscos
-  "nombre_entidad",\*atributo_multivaluado\*,{llave_primaria},otro
+  "nombre_entidad",*atributo_multivaluado*,{llave_primaria},otro
 
 ==Atributos compuestos
 
-Esta es quizá la sintaxis más compleja, primero debemos establecer el nombre del atributo y después el nombre de quienes se componen
-  "nombre_tipo_entidad",otro,{llave_primaria},C(|nombre_compuesto|:elemento;que;lo;componen)
+Esta es quizá la sintaxis más compleja, primero debemos establecer el nombre del atributo y después el nombre de quienes lo componen
+  "nombre_tipo_entidad",otro,{llave_primaria},C(|nombre_compuesto|:atributos;que;lo;componen)
 
-==Combinaciones
+==Combinaciones posibles
 
 ===Llaves parciales compuestas
 Como sabemos en un modelo ER podemos tener llaves parciales que sean compuestas y para eso ocupamos la sintaxis:
