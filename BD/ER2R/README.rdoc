@@ -67,7 +67,31 @@ Como sabemos en un modelo ER podemos tener llaves parciales que sean compuestas 
 
 =Vínculos
 
-*En construcción*
+==Vinculos binarios
+Los vinculos deberan especificar el nombre del vínculo,tipos de entidad que participan en el (solo deben ser dos entidades, para este caso), la participacion y cardinalidad de cada uno de los vínculos, seguidos, opcionalmente, por los atributos de dicho vínculo, todo esto separado por una "," (coma), como sigue
+
+  "nombre_vinculo",0r5,p1pN,/atrutos;opcionales/	--- (1)
+
+===Vinculos binarios: entidades participantes
+
+Las entidades participantes deben indicar el índice del tipo de entidad, comenzando en cero, este índice se establece, según se establezcan los tipos de entidad en el bloque previo, las entidades que se relacionen deberan ir separadas por una "r", al interprete le es indiferente si es minúscula o mayúscula, por estética, se pone minúscula.
+
+  El tipo de entidad 0 se relaciona con el tipo de entidad 5
+
+===Vinculos binarios: cardinalidad y participacion
+
+Lo primero que se indica en este bloque es la participacion que tiene el primer tipo de entidad indicado en el paso anterior con la segunda; lo mismo sucede para la cardinalidad y se lee, tomando el ejemplo anterior:
+
+  El tipo de entidad 0 tiene participacion parcial en este vínculo, mientras que el tipo de entidad 5 tiene parcipacion parcial en el vinculo, la cardinalidad es 1:N del tipo de entidad 0 al tipo de entidad 5
+
+===Vinculos binarios: atributos
+
+Los atributos pueden ser de cualquier tipo, como si de tipos de entidades se tratace. *IMPORTANTE* notar que van separados por ";" (punto y coma) en vez de "," (coma)
+
+==Vinculos unarios
+
+Los vinculos enarios se separan enter si por una *u* y debe indicar la participacion de sus entidades
+  "nombre_vinculo",(0r5)U(0r4),(p1pN)U(pNp1),/atributos,vinculo/
 
 =Ejemplo de un Entidad-Relacion, escrito en la sintaxis previamente definida
 
@@ -87,3 +111,9 @@ Como sabemos en un modelo ER podemos tener llaves parciales que sean compuestas 
   "avion_sevicio",5d6,p1pN
   "avion_dueno",5r4,pMpN
   "sevicio_empleado",6r3,pMpN
+
+  ==Nota: El interprete actualmente no cuenta con validación, por lo cual es de suma importancia no cometer un error de sintaxis, es decir que todo este bien cerrado y no poner cosas cuando no se necesitan por ejemplo
+
+  "nombre_vinculo",(0r5)U,(p1pN)
+
+Lo anterior seria un error que provocaría el cierre del programa.

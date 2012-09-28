@@ -148,10 +148,14 @@ def transformar(archivo):
 
 		nombreVinculo = v[0].replace('"','')
 
+		v[1] = v[1].lower()
+		if v[1].split('u','') > 0:
+			#vinculo eneario
+			pass
+
 		i = 0;
 		for e in v[2]:
 			i += 1
-
 			e = e.lower()
 			if e == 'p' or e == 't':
 				continue
