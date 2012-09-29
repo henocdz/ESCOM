@@ -112,7 +112,7 @@ Los vinculos enarios se separan enter si por una *u* y debe indicar la participa
   "avion_dueno",5r4,pMpN
   "sevicio_empleado",6r3,pMpN
 
-  ==Nota: El interprete actualmente no cuenta con validación, por lo cual es de suma importancia no cometer un error de sintaxis, es decir que todo este bien cerrado y no poner cosas cuando no se necesitan por ejemplo
+==Nota: El interprete actualmente no cuenta con validación, por lo cual es de suma importancia no cometer un error de sintaxis, es decir que todo este bien cerrado y no poner cosas cuando no se necesitan por ejemplo
 
   "nombre_vinculo",(0r5)U,(p1pN)
 
