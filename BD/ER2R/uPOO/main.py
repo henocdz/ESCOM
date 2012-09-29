@@ -1,111 +1,4 @@
-class AttrCompuesto(object):
-	"""Define la clase para un objeto de atributo compuesto"""
-	def __init__(self,obj):
-		self.elem = obj
-		elem = self.elem.replace('C(','')
-		elem = elem.replace(')','')
-		#Separar nombre de entidad compuesta y componentes
-		nombre_atributos = elem.split(":")
-		#Se obtiene nombre del principal
-		self.nombre = nombre_atributos[0].replace('|','')
-		#Genera los elemento de los cuales se compone el principal
-		self.atributos = nombre_atributos[1].split(";")
-		#atributos = atributos.replace(" ",'')
-	def getAtributos(self,keyType):
-		for atributo in self.atributos:
-			yield [atributo,keyType]
-
-
-
-class Vinculo(object):
-	def __init__(self,lineasVinculo,entidades,cardinalidad,participacion):
-		self.bk = lineasVinculo
-		self.elementos = (self.bk).split(',')
-
-		self.nombre = self.elementos[0]
-		self.v = (self.elementos[1]).replace('d','r')
-		self.v = (self.v).split('r')
-		self.c = cardinalidad
-		self.p = participacion
-		#entidades
-
-		try:
-			self.eu = entidades[int(self.v[0])]
-			self.ed = entidades[int(self.v[1])]
-		except:
-			raise TypeError
-
-		nombreL = len(self.nombre)
-		if self.nombre[0] == '"' and self.nombre[nombreL-1] == '"':
-			self.nombre = (self.nombre).replace('"','').replace('"','')
-		else:
-			raise SyntaxError
-
-		if len(self.elementos) > 3:
-			self.atributos = self.elementos[3]
-		else:
-			self.atributos = []
-	def format(self,mRelacional):
-		self.newRelacional = mRelacional
-
-		if self.c[0] == '1' and self.c[1] == 'n':
-			for pk in self.getPKs(self.eu):
-				if self.hasPKs(self.ed):
-					pk[1] = 'fk_',self.eu
-				(self.newRelacional[self.ed]).append(pk)
-		elif self.c[0] == 'n' and self.c[1] == '1':
-			for pk in self.getPKs(self.ed):
-				if self.hasPKs(self.eu):
-					pk[1] = 'fk_',self.ed
-				(self.newRelacional[self.eu]).append(pk)
-		elif self.c[0] == '1' and self.c[1] == '1':
-			if self.p[0] == 'p' and self.p[1] == 't':
-				for pk in self.getPKs(self.eu):
-					if self.hasPKs(self.ed):
-						pk[1] = 'fk_',self.eu
-					(self.newRelacional[self.ed]).append(pk)
-			elif self.p[0]=='t' and self.p[1]=='p':
-				for pk in self.getPKs(self.ed):
-					if self.hasPKs(self.eu):
-						pk[1] = 'fk_'+self.ed
-					(self.newRelacional[self.eu]).append(pk)
-			else:
-				for pk in self.getPKs(self.eu):
-					if self.hasPKs(self.ed):
-						pk[1] = 'fk_',self.eu
-					(self.newRelacional[self.ed]).append(pk)
-		elif self.c[0] == 'n' and self.c[1] == 'n':
-			self.newRelacional[self.nombre] = []
-			for pk in self.getPKs(self.eu):
-				(self.newRelacional[self.nombre]).append(pk)
-			for pk in self.getPKs(self.ed):
-				(self.newRelacional[self.nombre]).append(pk)
-				
-		return self.newRelacional
-	def getPKs(self,nombreEntidad):
-		for atributo in self.newRelacional[nombreEntidad]:
-			if atributo.count('pk') > 0 or atributo.count('ppk') > 0:
-				yield atributo
-	def hasPKs(self,nombreEntidad):
-		for atributo in self.newRelacional[nombreEntidad]:
-			if atributo.count('pk') > 0:
-				return True
-		return False
-
-class VinculoEneario(object):
-	def __init__(self,lineasVinculo,entiades):
-		self.bk = lineasVinculo
-		self.elementos = (self.bk).split(',')
-		self.nombre = self.elementos[0]
-
-		nombreL = len(self.nombre)
-		if self.nombre[0] == '"' and self.nombre[nombreL-1] == '"':
-			self.nombre = (self.nombre).replace('"','').replace('"','')
-		else:
-			raise SyntaxError
-
-	def getKeys(self,dic):
-		return [['prueba','pk']]
+import vinculos,atributos
 
 def archivoExiste(f):
 	def checarArchivo(*args,**kwargs):
@@ -176,7 +69,7 @@ def transformar(archivo):
 			elif fChar=='{' and lChar == '}':
 				nombreAtributo = elementoLinea.replace('{','').replace('}','')
 				if nombreAtributo[0] == "C" and nombreAtributo[1] == "(" and nombreAtributo[len(nombreAtributo)-1]	== ")":
-					compuesto = AttrCompuesto(nombreAtributo)
+					compuesto = atributos.Compuesto(nombreAtributo)
 					for atributo in compuesto.getAtributos("pk"):
 						mRelacional[nombreEntidad].append(atributo)
 				else:
@@ -185,20 +78,20 @@ def transformar(archivo):
 				nombreAtributo = elementoLinea.replace('[','').replace(']','')
 
 				if nombreAtributo[0] == "C" and nombreAtributo[1] == "(" and nombreAtributo[len(nombreAtributo)-1]	== ")":
-					compuesto = AttrCompuesto(nombreAtributo)
+					compuesto = atributos.Compuesto(nombreAtributo)
 					for atributo in compuesto.getAtributos('ppk'):
 						mRelacional[nombreEntidad].append(atributo)
 				else:
 					mRelacional[nombreEntidad].append([nombreAtributo,'ppk'])
 			elif fChar == "C" and elementoLinea[1] == "(" and lChar	== ")":
-				compuesto = AttrCompuesto(elementoLinea)
+				compuesto = atributos.Compuesto(elementoLinea)
 				for atributo in compuesto.getAtributos('a'):
 					mRelacional[nombreEntidad].append(atributo)
 			elif fChar == '*' and lChar == '*':
 				nombreAtributo = elementoLinea.replace('*','').replace('*','')
 
 				if nombreAtributo[0] == 'C' and nombreAtributo[1] == '(' and nombreAtributo[len(nombreAtributo)-1] == ')':
-					compuesto = AttrCompuesto(nombreAtributo)
+					compuesto = atributos.Compuesto(nombreAtributo)
 					mRelacional[compuesto.nombre] = []
 					for atributo in compuesto.getAtributos('pk'):
 						mRelacional[compuesto.nombre].append(atributo)
@@ -221,7 +114,7 @@ def transformar(archivo):
 		relaciones = relaciones.split('u')
 
 		if len(relaciones)>1:
-			vinculosEnearios.append(VinculoEneario(v,entidades))
+			vinculosEnearios.append(vinculos.VinculoEneario(v,entidades))
 			continue
 
 		i = 0;
@@ -245,11 +138,11 @@ def transformar(archivo):
 					cd = 'n'
 
 		if (cu == '1' and cd == 'n') or (cu=='n' and cd=='1'):
-			vinculos1N.append(Vinculo(v,entidades,[cu,cd],[pu,pd]))
+			vinculos1N.append(vinculos.Vinculo(v,entidades,[cu,cd],[pu,pd]))
 		elif cu=='n' and cd=='n':
-			vinculosMN.append(Vinculo(v,entidades,[cu,cd],[pu,pd]))
+			vinculosMN.append(vinculos.Vinculo(v,entidades,[cu,cd],[pu,pd]))
 		elif cu=='1' and cd=='1':
-			vinculos11.append(Vinculo(v,entidades,[cu,cd],[pu,pd]))
+			vinculos11.append(vinculos.Vinculo(v,entidades,[cu,cd],[pu,pd]))
 	
 
 	#Paso 3
@@ -274,4 +167,8 @@ def transformar(archivo):
 		for attr in mRelacional[relacion]:
 			print "\t",attr
 
-transformar('../format.bd')
+
+def goahead():
+	transformar(raw_input("Introduzca el archivo a transformar (*.bd): "))
+while 1:
+	goahead()

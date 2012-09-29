@@ -12,4 +12,4 @@
 "avion_hangar",5r1,t1p1
 "avion_sevicio",5d6,p1pN
 "avion_dueno",5r4,pMpN
-"servicio_empleado",6r3,pMpN,#atributo1,attr2#
+"servicio_empleado",6r3,pMpN,/atributo1;attr2/

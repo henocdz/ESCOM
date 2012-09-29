@@ -86,12 +86,12 @@ Lo primero que se indica en este bloque es la participacion que tiene el primer 
 
 ===Vinculos binarios: atributos
 
-Los atributos pueden ser de cualquier tipo, como si de tipos de entidades se tratace. *IMPORTANTE* notar que van separados por ";" (punto y coma) en vez de "," (coma)
+Los atributos pueden ser: simples,multivaluados y/o compuestos. No pueden ser llave primaria, ya que los vínculos no llevan esto. *IMPORTANTE* notar que van separados por ";" (punto y coma) en vez de "," (coma)
 
 ==Vinculos unarios
 
 Los vinculos enarios se separan enter si por una *u* y debe indicar la participacion de sus entidades
-  "nombre_vinculo",(0r5)U(0r4),(p1pN)U(pNp1),/atributos,vinculo/
+  "nombre_vinculo",(0r5)U(0r4),(p1pN)U(pNp1),/atributos;vinculo/
 
 =Ejemplo de un Entidad-Relacion, escrito en la sintaxis previamente definida
 
