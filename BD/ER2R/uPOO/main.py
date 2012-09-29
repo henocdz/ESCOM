@@ -63,18 +63,24 @@ class Vinculo(object):
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
 						pk[1] = 'fk_',self.eu
-				(self.newRelacional[self.ed]).append(pk)
+					(self.newRelacional[self.ed]).append(pk)
 			elif self.p[0]=='t' and self.p[1]=='p':
 				for pk in self.getPKs(self.ed):
 					if self.hasPKs(self.eu):
 						pk[1] = 'fk_'+self.ed
-				(self.newRelacional[self.eu]).append(pk)
+					(self.newRelacional[self.eu]).append(pk)
 			else:
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
 						pk[1] = 'fk_',self.eu
-				(self.newRelacional[self.ed]).append(pk)
-
+					(self.newRelacional[self.ed]).append(pk)
+		elif self.c[0] == 'n' and self.c[1] == 'n':
+			self.newRelacional[self.nombre] = []
+			for pk in self.getPKs(self.eu):
+				(self.newRelacional[self.nombre]).append(pk)
+			for pk in self.getPKs(self.ed):
+				(self.newRelacional[self.nombre]).append(pk)
+				
 		return self.newRelacional
 	def getPKs(self,nombreEntidad):
 		for atributo in self.newRelacional[nombreEntidad]:
