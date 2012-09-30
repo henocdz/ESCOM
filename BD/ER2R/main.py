@@ -78,7 +78,7 @@ def transformar(archivo):
 				try:
 					for p in mRelacional[nombrePropietaria]:
 						if p[1].find('pk') >= 0 :
-							mRelacional[nombreEntidad].append(p)
+							mRelacional[nombreEntidad].append([p[0],"pk:"+nombrePropietaria])
 				except:
 					print "Tipo de entidad no encontrado Linea: ",ll," Elemento: ",ee
 					exit()

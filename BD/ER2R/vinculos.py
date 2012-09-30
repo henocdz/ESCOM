@@ -39,10 +39,13 @@ class Vinculo(object):
 					fk = 'fk:'+self.eu
 				else:
 					fk = pk[1]
-				(self.newRelacional[self.ed]).append([pk[0],fk])
+				#def hasPk(self,entidad,atributo,propietaria):
+				if not(self.hasPk(self.ed,pk[0],self.eu)):
+					(self.newRelacional[self.ed]).append([pk[0],fk])
 			if self.hasAtributos:
 				for atributoVinculo in self.getAtributos():
-					(self.newRelacional[self.ed]).append(atributoVinculo)
+					if not(self.hasPk(self.ed,pk[0],self.eu)):
+						(self.newRelacional[self.ed]).append(atributoVinculo)
 		elif self.c[0] == 'n' and self.c[1] == '1':
 			for pk in self.getPKs(self.ed):
 				if self.hasPKs(self.eu):
@@ -50,24 +53,30 @@ class Vinculo(object):
 					fk = 'fk:'+self.ed
 				else:
 					fk = pk[1]
-				(self.newRelacional[self.eu]).append([pk[0],fk])
+					
+				if not(self.hasPk(self.eu,pk[0],self.ed)):
+					(self.newRelacional[self.eu]).append([pk[0],fk])
 			if self.hasAtributos:
 				for atributoVinculo in self.getAtributos():
-					(self.newRelacional[self.eu]).append(atributoVinculo)
+					if not(self.hasPk(self.eu,pk[0],self.ed)):
+						(self.newRelacional[self.eu]).append(atributoVinculo)
 		elif self.c[0] == '1' and self.c[1] == '1':
 			if self.p[0] == 'p' and self.p[1] == 't':
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
 						pk[1] = 'fk:'+self.eu
-					(self.newRelacional[self.ed]).append(pk)
+
+					if not(self.hasPk(self.ed,pk[0],self.eu)):
+						(self.newRelacional[self.ed]).append(pk)
 				if self.hasAtributos:
 					for atributoVinculo in self.getAtributos():
 						(self.newRelacional[self.ed]).append(atributoVinculo)
 			elif self.p[0]=='t' and self.p[1]=='p':
 				for pk in self.getPKs(self.ed):
 					if self.hasPKs(self.eu):
-						pk[1] = 'fk:'+self.ed
-					(self.newRelacional[self.eu]).append(pk)
+						pk[1] = 'fk:'+self.ed7
+					if not(self.hasPk(self.eu,pk[0],self.ed)):
+						(self.newRelacional[self.eu]).append(pk)
 
 				if self.hasAtributos:
 					for atributoVinculo in self.getAtributos():
@@ -76,7 +85,9 @@ class Vinculo(object):
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
 						pk[1] = 'fk:'+self.eu
-					(self.newRelacional[self.ed]).append(pk)
+
+					if not(self.hasPk(self.ed,pk[0],self.eu)):
+						(self.newRelacional[self.ed]).append(pk)
 				if self.hasAtributos:
 					for atributoVinculo in self.getAtributos():
 						(self.newRelacional[self.ed]).append(atributoVinculo)
@@ -122,9 +133,7 @@ class Vinculo(object):
 				rAtributos.append([atributo,'v:'+self.nombre])
 
 		for r in rAtributos:
-			yield r
-
-		
+			yield r	
 	def getPKs(self,nombreEntidad):
 		for atributo in self.newRelacional[nombreEntidad]:
 			if atributo.count('pk') > 0 or atributo.count('ppk') > 0:
@@ -134,9 +143,29 @@ class Vinculo(object):
 			if atributo.count('pk') > 0:
 				return True
 		return False
+	def hasPk(self,entidad,atributo,propietaria):
+		try:
+			eBuscando = self.newRelacional[entidad]
+			for a in eBuscando:
+				e = a[0]
+				bk = a[1]
+				vieneDe = bk.split(':')
+				
+				if len(vieneDe) > 1:
+					vieneDe = vieneDe[1]
+				else:
+					return False
+
+				if vieneDe == propietaria and e == atributo:
+					return True
+				else:
+					return False
+
+		except:
+			print "Error en Vinculos"
 
 class VinculoEneario(object):
-	def __init__(self,lineasVinculo,entiades):
+	def __init__(self,lineasVinculo,entidades):
 		self.bk = lineasVinculo
 		self.elementos = (self.bk).split(',')
 		self.nombre = self.elementos[0]
