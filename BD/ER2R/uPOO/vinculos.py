@@ -36,7 +36,7 @@ class Vinculo(object):
 			for pk in self.getPKs(self.eu):
 				if self.hasPKs(self.ed):
 					fk = pk[1]
-					fk = 'fk_'+self.eu
+					fk = 'fk:'+self.eu
 				else:
 					fk = pk[1]
 				(self.newRelacional[self.ed]).append([pk[0],fk])
@@ -47,7 +47,7 @@ class Vinculo(object):
 			for pk in self.getPKs(self.ed):
 				if self.hasPKs(self.eu):
 					fk = pk[1]
-					fk = 'fk_'+self.ed
+					fk = 'fk:'+self.ed
 				else:
 					fk = pk[1]
 				(self.newRelacional[self.eu]).append([pk[0],fk])
@@ -58,7 +58,7 @@ class Vinculo(object):
 			if self.p[0] == 'p' and self.p[1] == 't':
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
-						pk[1] = 'fk_'+self.eu
+						pk[1] = 'fk:'+self.eu
 					(self.newRelacional[self.ed]).append(pk)
 				if self.hasAtributos:
 					for atributoVinculo in self.getAtributos():
@@ -66,7 +66,7 @@ class Vinculo(object):
 			elif self.p[0]=='t' and self.p[1]=='p':
 				for pk in self.getPKs(self.ed):
 					if self.hasPKs(self.eu):
-						pk[1] = 'fk_'+self.ed
+						pk[1] = 'fk:'+self.ed
 					(self.newRelacional[self.eu]).append(pk)
 
 				if self.hasAtributos:
@@ -75,7 +75,7 @@ class Vinculo(object):
 			else:
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
-						pk[1] = 'fk_'+self.eu
+						pk[1] = 'fk:'+self.eu
 					(self.newRelacional[self.ed]).append(pk)
 				if self.hasAtributos:
 					for atributoVinculo in self.getAtributos():
@@ -85,16 +85,16 @@ class Vinculo(object):
 			for pk in self.getPKs(self.eu):
 				fk = pk[1]
 				if fk == 'ppk':
-					fk = fk.replace('ppk','ppk_'+self.eu)
+					fk = fk.replace('ppk','ppk:'+self.eu)
 				elif fk == 'pk':
-					fk = fk.replace('pk','pk_'+self.eu)
+					fk = fk.replace('pk','pk:'+self.eu)
 				(self.newRelacional[self.nombre]).append([pk[0],fk])
 			for pk in self.getPKs(self.ed):
 				fk = pk[1]
 				if fk == 'ppk':
-					fk = fk.replace('ppk','ppk_'+self.ed)
+					fk = fk.replace('ppk','ppk:'+self.ed)
 				elif fk == 'pk':
-					fk = fk.replace('pk','pk_'+self.ed)
+					fk = fk.replace('pk','pk:'+self.ed)
 				(self.newRelacional[self.nombre]).append([pk[0],fk])
 
 			if self.hasAtributos:
@@ -116,10 +116,10 @@ class Vinculo(object):
 			lChar = atributo[len(atributo) - 1]
 			if fChar == "C" and atributo[1] == "(" and lChar	== ")":
 				compuesto = atributos.Compuesto(atributo)
-				for a in compuesto.getAtributos('v_'+self.nombre):
+				for a in compuesto.getAtributos('v:'+self.nombre):
 					rAtributos.append(a)
 			else:
-				rAtributos.append([atributo,'v_'+self.nombre])
+				rAtributos.append([atributo,'v:'+self.nombre])
 
 		for r in rAtributos:
 			yield r
