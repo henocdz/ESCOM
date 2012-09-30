@@ -1,3 +1,5 @@
+import atributos
+
 class Vinculo(object):
 	def __init__(self,lineasVinculo,entidades,cardinalidad,participacion):
 		self.bk = lineasVinculo
@@ -9,8 +11,6 @@ class Vinculo(object):
 		self.c = cardinalidad
 		self.p = participacion
 		#entidades
-
-		print self.v,"\n\n"
 		try:
 			self.eu = entidades[int(self.v[0])]
 			self.ed = entidades[int(self.v[1])]
@@ -28,57 +28,101 @@ class Vinculo(object):
 			self.atributos = self.elementos[3]
 		else:
 			self.hasAtributos = False
+			self.atributos = []
 	def format(self,mRelacional):
 		self.newRelacional = mRelacional
 
 		if self.c[0] == '1' and self.c[1] == 'n':
 			for pk in self.getPKs(self.eu):
 				if self.hasPKs(self.ed):
-					pk[1] = 'fk_',self.eu
-				(self.newRelacional[self.ed]).append(pk)
+					fk = pk[1]
+					fk = 'fk_'+self.eu
+				else:
+					fk = pk[1]
+				(self.newRelacional[self.ed]).append([pk[0],fk])
+			if self.hasAtributos:
+				for atributoVinculo in self.getAtributos():
+					(self.newRelacional[self.ed]).append(atributoVinculo)
 		elif self.c[0] == 'n' and self.c[1] == '1':
 			for pk in self.getPKs(self.ed):
 				if self.hasPKs(self.eu):
-					pk[1] = 'fk_',self.ed
-				(self.newRelacional[self.eu]).append(pk)
+					fk = pk[1]
+					fk = 'fk_'+self.ed
+				else:
+					fk = pk[1]
+				(self.newRelacional[self.eu]).append([pk[0],fk])
+			if self.hasAtributos:
+				for atributoVinculo in self.getAtributos():
+					(self.newRelacional[self.eu]).append(atributoVinculo)
 		elif self.c[0] == '1' and self.c[1] == '1':
 			if self.p[0] == 'p' and self.p[1] == 't':
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
-						pk[1] = 'fk_',self.eu
+						pk[1] = 'fk_'+self.eu
 					(self.newRelacional[self.ed]).append(pk)
+				if self.hasAtributos:
+					for atributoVinculo in self.getAtributos():
+						(self.newRelacional[self.ed]).append(atributoVinculo)
 			elif self.p[0]=='t' and self.p[1]=='p':
 				for pk in self.getPKs(self.ed):
 					if self.hasPKs(self.eu):
 						pk[1] = 'fk_'+self.ed
 					(self.newRelacional[self.eu]).append(pk)
+
+				if self.hasAtributos:
+					for atributoVinculo in self.getAtributos():
+						(self.newRelacional[self.eu]).append(atributoVinculo)
 			else:
 				for pk in self.getPKs(self.eu):
 					if self.hasPKs(self.ed):
-						pk[1] = 'fk_',self.eu
+						pk[1] = 'fk_'+self.eu
 					(self.newRelacional[self.ed]).append(pk)
+				if self.hasAtributos:
+					for atributoVinculo in self.getAtributos():
+						(self.newRelacional[self.ed]).append(atributoVinculo)
 		elif self.c[0] == 'n' and self.c[1] == 'n':
 			self.newRelacional[self.nombre] = []
 			for pk in self.getPKs(self.eu):
-				if pk[1] == 'ppk':
-					pk[1] = pk[1].replace('ppk','ppk_'+self.eu)
-				elif pk[1] == 'pk':
-					pk[1] = pk[1].replace('pk','pk_'+self.eu)
-				(self.newRelacional[self.nombre]).append(pk)
+				fk = pk[1]
+				if fk == 'ppk':
+					fk = fk.replace('ppk','ppk_'+self.eu)
+				elif fk == 'pk':
+					fk = fk.replace('pk','pk_'+self.eu)
+				(self.newRelacional[self.nombre]).append([pk[0],fk])
 			for pk in self.getPKs(self.ed):
-				if pk[1] == 'ppk':
-					pk[1] = pk[1].replace('ppk','ppk_'+self.ed)
-				elif pk[1] == 'pk':
-					pk[1] = pk[1].replace('pk','pk_'+self.ed)
-				(self.newRelacional[self.nombre]).append(pk)
+				fk = pk[1]
+				if fk == 'ppk':
+					fk = fk.replace('ppk','ppk_'+self.ed)
+				elif fk == 'pk':
+					fk = fk.replace('pk','pk_'+self.ed)
+				(self.newRelacional[self.nombre]).append([pk[0],fk])
+
+			if self.hasAtributos:
+				for atributoVinculo in self.getAtributos():
+					(self.newRelacional[self.nombre]).append(atributoVinculo)
+
 		return self.newRelacional
-	def getAtributos():
-		aL = len(self.hasAtributos)
+	def getAtributos(self):
+		aL = len(self.atributos)
 		if not(self.atributos[0] == '/' and self.atributos[aL-1] == '/'):
 			raise SyntaxError
 
 		self.atributos = self.atributos.replace('/','')
 		self.a = (self.atributos).split(';')
+
+		rAtributos = []
+		for atributo in self.a:
+			fChar = atributo[0]
+			lChar = atributo[len(atributo) - 1]
+			if fChar == "C" and atributo[1] == "(" and lChar	== ")":
+				compuesto = atributos.Compuesto(atributo)
+				for a in compuesto.getAtributos('v_'+self.nombre):
+					rAtributos.append(a)
+			else:
+				rAtributos.append([atributo,'v_'+self.nombre])
+
+		for r in rAtributos:
+			yield r
 
 		
 	def getPKs(self,nombreEntidad):

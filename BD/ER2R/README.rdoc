@@ -25,7 +25,13 @@ La linea "/vinculos" es muy importante para el interprete, si no es encontrada, 
 Cada tipo de entidad deberá ir en una nueva linea, con el siguiente formato obligatorio
   "nombre_tipo_entidad",atributos,separados,por,comas
 
-=Formato para entidades
+== Tipos de entidad débil
+
+Los tipos de entidades débiles tienen la siguiente sintaxis
+
+  D("entidad_debil"|"entidad_propietaria"),otros,atributos
+
+=Formato para atributos
 
 ==Atributo simple
 

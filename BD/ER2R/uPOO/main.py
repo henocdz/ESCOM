@@ -41,7 +41,11 @@ def transformar(archivo):
 			if atributo.count('pk') > 0 or atributo.count('ppk') > 0:
 				yield atributo
 
+	(ll,ee) = (0,0)
+
 	for l in lineas:
+		ll += 1
+		ee = 0
 		l = l.replace("\n",'')
 		partesLinea = l.split(',')
 		nombreEntidad = '';
@@ -58,11 +62,29 @@ def transformar(archivo):
 
 		#Leyendo elementos por linea
 		for elementoLinea in partesLinea:
+			ee += 1
+
 			lenElementoLinea = len(elementoLinea)
 			fChar = elementoLinea[0]
 			lChar = elementoLinea[lenElementoLinea-1]
 
-			if fChar == '"' and lChar == '"':
+			if fChar == 'D' and elementoLinea[1] == "(" and lChar == ')':
+				nombres = (elementoLinea.replace('D(','').replace(')','')).split("|")
+				nombreEntidad = nombres[0].replace('"','')
+				nombrePropietaria = nombres[1].replace('"','')
+				entidades.append(nombreEntidad)
+				mRelacional[nombreEntidad] = []
+
+				try:
+					for p in mRelacional[nombrePropietaria]:
+						if p[1].find('pk') >= 0 :
+							print p
+							mRelacional[nombreEntidad].append(p)
+					print mRelacional[nombrePropietaria]
+				except:
+					print "Tipo de entidad no encontrado Linea: ",ll," Elemento: ",ee
+					exit()
+			elif fChar == '"' and lChar == '"':
 				nombreEntidad = elementoLinea.replace('"','')
 				entidades.append(nombreEntidad)
 				mRelacional[nombreEntidad] = []
