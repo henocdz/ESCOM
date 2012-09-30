@@ -107,7 +107,7 @@ Los vinculos enarios se separan enter si por una *u* y debe indicar la participa
   "empleado",turno,{nss},salario
   "dueno",{nss},nombre
   "avion",{nreg}
-  "servicio",[C(|fecha/codT|:fecha;codT)],horas
+  D("servicio"|"avion"),[C(|fecha/codT|:fecha;codT)],horas
   
   
   /vinculos
