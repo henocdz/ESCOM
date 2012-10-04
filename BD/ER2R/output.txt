@@ -1,0 +1,33 @@
+
+servicio => 
+    [PK] /=> avion.nreg    [PK] /=> fecha    [PK] /=> codT    horas  
+
+sevicio_empleado => 
+    [PK] /=> servicio.fecha    [PK] /=> servicio.codT    [PK] /=> empleado.nss  
+
+dueno => 
+    [PK] /=> nss    nombre  
+
+piloto => 
+    rest    [PK] /=> numeroLicencia  
+
+empleado => 
+    turno    [PK] /=> nss    salario  
+
+avion => 
+    [PK] /=> nreg    [FK] /=> tipo_avion.modelo    [FK] /=> hangar.numero  
+
+tipo_avion => 
+    [PK] /=> modelo    capacidad    peso  
+
+colores => 
+    [PK] /=> colores    [PK] /=> numero  
+
+tipoAvion_piloto => 
+    [PK] /=> tipo_avion.modelo    [PK] /=> piloto.numeroLicencia  
+
+avion_dueno => 
+    [PK] /=> avion.nreg    [PK] /=> dueno.nss  
+
+hangar => 
+    [PK] /=> numero    lugar    capacidad  

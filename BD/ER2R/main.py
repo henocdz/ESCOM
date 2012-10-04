@@ -1,4 +1,6 @@
-import vinculos,atributos
+import vinculos,atributos,re
+
+from Benchmark.benchrun import *
 
 def archivoExiste(f):
 	def checarArchivo(*args,**kwargs):
@@ -181,11 +183,50 @@ def transformar(archivo):
 	for eneario in vinculosEnearios:
 		mRelacional[eneario.nombre] = eneario.getKeys(mRelacional)
 
+	for r in mRelacional:
+		print mRelacional[r]
+	imprimir(mRelacional)
 
-	for relacion in mRelacional:
-		print relacion," => "
-		for attr in mRelacional[relacion]:
-			print "\t",attr
+
+def imprimir(mr):
+	ce = ""
+	for r in mr:
+		
+		ce += "\n"+r+" => \n    "
+
+		for attr in mr[r]:
+			if  attr[1].find('ppk:') >= 0 or attr[1].find('pk:') >= 0 or attr[1].find("fk:")>=0:
+				s = attr[1].split(":")
+				if s[0] == "ppk":
+					s[0] = s[0][1:]
+				ce += "["+s[0].replace(':','').upper()+"] /=> "+s[1]+"."+attr[0]+ "    "
+			elif  attr[1].find('ppk') >= 0 or attr[1].find('pk') >= 0 or attr[1].find("fk")>=0:
+				s = attr[1]
+				if s == "ppk":
+					s = s[1:]
+				ce += "["+s.replace(':','').upper()+"] /=> "+attr[0]+ "    "
+			else:
+				ce += attr[0]+"    "
+
+		ce = ce[:-2]
+		ce += "\n"
+
+	try:
+		f = open('output.txt','w')
+		f.write(ce)
+		f.close()
+	except:
+		print "\n\t|!| ERROR: Imposible crear archivo. Se muestra a continuacion: \n"
+		print ce
+	else:
+		print "\n\t>>>Se ha guardado el archivo output.txt exitosamente \n"
+
+
+
+"""
+with Timer():
+	transformar('format.bd')
+"""
 
 
 def goahead():
