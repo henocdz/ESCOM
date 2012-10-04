@@ -1,6 +1,6 @@
 import vinculos,atributos,re
 
-from Benchmark.benchrun import *
+#from Benchmark.benchrun import *
 
 def archivoExiste(f):
 	def checarArchivo(*args,**kwargs):
@@ -222,7 +222,7 @@ def imprimir(mr):
 		print "\n\t>>>Se ha guardado el archivo output.txt exitosamente \n"
 
 
-
+#Ignoren esto x)
 """
 with Timer():
 	transformar('format.bd')
