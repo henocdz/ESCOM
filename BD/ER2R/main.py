@@ -181,9 +181,9 @@ def transformar(archivo):
 	for eneario in vinculosEnearios:
 		mRelacional[eneario.nombre] = eneario.getKeys(mRelacional)
 
-	for r in mRelacional:
+	"""for r in mRelacional:
 		print r
-		print mRelacional[r]
+		print mRelacional[r]"""
 	imprimir(mRelacional)
 
 
