@@ -21,7 +21,7 @@ tipo_avion =>
     [PK] /=> modelo    capacidad    peso  
 
 colores => 
-    [PK] /=> colores    [PK] /=> numero  
+    [PK] /=> colores    [PK] /=> servicio.nreg    [PK] /=> servicio.fecha    [PK] /=> servicio.codT  
 
 tipoAvion_piloto => 
     [PK] /=> tipo_avion.modelo    [PK] /=> piloto.numeroLicencia  

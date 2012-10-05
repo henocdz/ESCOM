@@ -33,12 +33,10 @@ def transformar(archivo):
 	lineasVinculos = []
 	leyendoVinculos = False
 
-	multivaluados = []
 	vinculosEnearios = []
 	vinculos11 = []
 	vinculos1N = []
 	vinculosMN = []
-
 
 	def getPKs(nombreEntidad):
 		for atributo in mRelacional[nombreEntidad]:
@@ -117,8 +115,20 @@ def transformar(archivo):
 					mRelacional[nombreEntidad].append(atributo)
 			#Multivaluados
 			elif fChar == '*' and lChar == '*':
-				multivaluados.append(atributos.Multivaluado(elementoLinea,nombreEntidad))
-			#Atributo normal
+				nombreAtributo = elementoLinea.replace('*','').replace('*','')
+
+				if nombreAtributo[0] == 'C' and nombreAtributo[1] == '(' and nombreAtributo[len(nombreAtributo)-1] == ')':
+					compuesto = atributos.Compuesto(nombreAtributo)
+					mRelacional[compuesto.nombre] = []
+					for atributo in compuesto.getAtributos('pk'):
+						mRelacional[compuesto.nombre].append(atributo)
+					for pk in getPKs(nombreEntidad):
+						pka = pk[1]
+						mRelacional[compuesto.nombre].append([pk[0],pka+":"+nombreEntidad])
+				else:
+					mRelacional[nombreAtributo] = [[nombreAtributo,'pk']]
+					for pk in getPKs(nombreEntidad):
+						mRelacional[nombreAtributo].append([pk[0],pk[1]+":"+nombreEntidad])
 			else:
 				nombreAtributo = elementoLinea
 				mRelacional[nombreEntidad].append([nombreAtributo,'a'])
@@ -162,6 +172,7 @@ def transformar(archivo):
 		elif cu=='1' and cd=='1':
 			vinculos11.append(vinculos.Vinculo(v,entidades,[cu,cd],[pu,pd]))
 	
+
 	#Paso 3
 	for uu in vinculos11:
 		mRelacional = uu.format(mRelacional)
@@ -173,11 +184,8 @@ def transformar(archivo):
 	#Paso 5
 	for nm in vinculosMN:
 		mRelacional = nm.format(mRelacional)
-	#Paso 6
-	for mv in multivaluados:
-		mRelacional = mv.format(mRelacional)
 
-	#Paso 7
+	#Paso 6
 	for eneario in vinculosEnearios:
 		mRelacional[eneario.nombre] = eneario.getKeys(mRelacional)
 
