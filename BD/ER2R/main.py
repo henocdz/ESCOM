@@ -69,9 +69,12 @@ def transformar(archivo):
 			ee += 1
 
 			lenElementoLinea = len(elementoLinea)
+			#Primer caracter
 			fChar = elementoLinea[0]
+			#Ultimo caracter
 			lChar = elementoLinea[lenElementoLinea-1]
 
+			#Tipo de Entidad Debil
 			if fChar == 'D' and elementoLinea[1] == "(" and lChar == ')':
 				nombres = (elementoLinea.replace('D(','').replace(')','')).split("|")
 				nombreEntidad = nombres[0].replace('"','')

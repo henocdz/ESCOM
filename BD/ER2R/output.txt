@@ -1,33 +1,27 @@
 
-servicio => 
-    [PK] /=> avion.nreg    [PK] /=> fecha    [PK] /=> codT    horas  
+EjemplarTramo => 
+    [PK] /=> tramoVuelo.Numero    [PK] /=> tramoVuelo.NumTramo    [PK] /=> fecha    numAsientosDisponibles    [PK] /=> idAvion    [FK] /=> Aeropuerto.CodAeropuerto    horaLlega    [FK] /=> Aeropuerto.CodAeropuerto    horaSalida    [FK] /=> tramoVuelo.NumTramo    [FK] /=> tramoVuelo.CodAeropuerto  
 
-sevicio_empleado => 
-    [PK] /=> servicio.fecha    [PK] /=> servicio.codT    [PK] /=> empleado.nss  
+Asiento => 
+    [PK] /=> EjemplarTramo.Numero    [PK] /=> EjemplarTramo.NumTramo    [PK] /=> EjemplarTramo.fecha    [PK] /=> NumAsiento    [PK] /=> fecha    [PK] /=> idAvion    nombreCliente    TelCli  
 
-dueno => 
-    [PK] /=> nss    nombre  
+PuedeAterrizar => 
+    [PK] /=> Aeropuerto.CodAeropuerto    [PK] /=> TipoAvion.NombreTipo  
 
-piloto => 
-    rest    [PK] /=> numeroLicencia  
+Aeropuerto => 
+    [PK] /=> CodAeropuerto    nombre    ciudad    estado  
 
-empleado => 
-    turno    [PK] /=> nss    salario  
+Avion => 
+    [PK] /=> idAvion    totalasientos    [FK] /=> TipoAvion.NombreTipo  
 
-avion => 
-    [PK] /=> nreg    [FK] /=> tipo_avion.modelo    [FK] /=> hangar.numero  
+Vuelo => 
+    [PK] /=> Numero    diasSemana    linea  
 
-tipo_avion => 
-    [PK] /=> modelo    capacidad    peso  
+Tarifa => 
+    [PK] /=> Vuelo.Numero    [PK] /=> Codigo    Importe    Restricciones  
 
-colores => 
-    [PK] /=> colores    [PK] /=> servicio.nreg    [PK] /=> servicio.fecha    [PK] /=> servicio.codT  
+tramoVuelo => 
+    [PK] /=> Vuelo.Numero    [PK] /=> NumTramo    [PK] /=> CodAeropuerto    HoraSalidaProg    [FK] /=> Aeropuerto.CodAeropuerto    HoraLlegadaProg  
 
-tipoAvion_piloto => 
-    [PK] /=> tipo_avion.modelo    [PK] /=> piloto.numeroLicencia  
-
-avion_dueno => 
-    [PK] /=> avion.nreg    [PK] /=> dueno.nss  
-
-hangar => 
-    [PK] /=> numero    lugar    capacidad  
+TipoAvion => 
+    [PK] /=> NombreTipo    maxasientos    compania  

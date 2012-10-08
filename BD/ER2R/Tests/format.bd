@@ -3,8 +3,8 @@
 "piloto",rest,{numeroLicencia}
 "empleado",turno,{nss},salario
 "dueno",{nss},nombre
-"avion",{nreg}
-D("servicio"|"avion"),[C(|fecha/codT|:fecha;codT)],horas,*colores*
+"avion",{nreg},*C(|fecha/codT|:fecha;codT)*
+D("servicio"|"avion"),[C(|fecha/codT|:fecha;codT)],horas
 /vinculos
 "tipoAvion_avion",0r5,p1pN
 "tipoAvion_piloto",0r2,pMpN
